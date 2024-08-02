@@ -14,6 +14,7 @@ const GameField = ({
   currentStep,
   nextStep,
   winnerSequence,
+  winnerSymbol,
 }) => {
   return (
     <>
@@ -31,6 +32,7 @@ const GameField = ({
               <GameCell
                 onClick={() => handleCellClick(i)}
                 isWinner={winnerSequence?.includes(i)}
+                disabled={!!winnerSymbol}
               >
                 {symbol && (
                   <GameSymbol symbol={symbol} className="w-5 h-5"></GameSymbol>

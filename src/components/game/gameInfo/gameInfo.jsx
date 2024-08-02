@@ -39,7 +39,13 @@ const players = [
   },
 ];
 
-const GameInfo = ({ className, playersCount, currentStep }) => {
+const GameInfo = ({
+  className,
+  playersCount,
+  currentStep,
+  winnerExist,
+  onTimeOver,
+}) => {
   return (
     <div
       className={clsx(
@@ -52,7 +58,8 @@ const GameInfo = ({ className, playersCount, currentStep }) => {
           key={player.id}
           playerInfo={player}
           isRight={index % 2 === 0}
-          isTimerRunning={player.symbol === currentStep}
+          isTimerRunning={player.symbol === currentStep && !winnerExist}
+          onTimeOver={onTimeOver}
         ></PlayerInfo>
       ))}
     </div>

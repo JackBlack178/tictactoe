@@ -3,13 +3,18 @@ import React from "react";
 import { computeWinner, getNextStep } from "../components/game/model";
 
 export const useGameState = (playersCount, winnerExist) => {
-  const [{ currentStep, cells }, setGameState] = React.useState(() => ({
-    currentStep: GAME_SYBOLS.CROSS,
-    cells: Array(19 * 19).fill(null),
-  }));
+  const [{ currentStep, cells, playersTimeOver }, setGameState] =
+    React.useState(() => ({
+      currentStep: GAME_SYBOLS.CROSS,
+      cells: Array(19 * 19).fill(null),
+      playersTimeOver: [],
+    }));
 
-  const nextStep = getNextStep(currentStep, playersCount);
+  const nextStep = getNextStep(currentStep, playersCount, playersTimeOver);
   const winnerSequence = computeWinner(cells);
+
+  const winnerSymbol =
+    nextStep === currentStep ? currentStep : winnerSequence?.[0];
 
   const handleCellClick = (index) => {
     setGameState((prev) => {
@@ -17,7 +22,11 @@ export const useGameState = (playersCount, winnerExist) => {
 
       return {
         ...prev,
-        currentStep: getNextStep(prev.currentStep, playersCount),
+        currentStep: getNextStep(
+          prev.currentStep,
+          playersCount,
+          playersTimeOver,
+        ),
         cells: [
           ...prev.cells.slice(0, index),
           prev.currentStep,
@@ -27,11 +36,27 @@ export const useGameState = (playersCount, winnerExist) => {
     });
   };
 
+  const handlePlayerTimeOver = (symbol) => {
+    setGameState((prev) => {
+      return {
+        ...prev,
+        playersTimeOver: [...prev.playersTimeOver, symbol],
+        currentStep: getNextStep(
+          prev.currentStep,
+          playersCount,
+          playersTimeOver,
+        ),
+      };
+    });
+  };
+
   return {
     currentStep,
     cells,
     nextStep,
-    handleCellClick,
     winnerSequence,
+    winnerSymbol,
+    handleCellClick,
+    handlePlayerTimeOver,
   };
 };

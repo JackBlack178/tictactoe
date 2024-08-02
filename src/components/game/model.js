@@ -1,13 +1,15 @@
 import { SYMBOLS_ORDER } from "../../constants/constants";
 
-export function getNextStep(currentStep, playersCount) {
-  const slicedSymbolsOrder = SYMBOLS_ORDER.slice(0, playersCount);
+export function getNextStep(currentStep, playersCount, playersTimeOver) {
+  const slicedSymbolsOrder = SYMBOLS_ORDER.slice(0, playersCount).filter(
+    (symbol) => !playersTimeOver.includes(symbol),
+  );
 
   const nextMoveIndex =
     slicedSymbolsOrder.slice(0, playersCount).indexOf(currentStep) + 1;
 
   return slicedSymbolsOrder.slice(0, playersCount)[
-    nextMoveIndex % playersCount
+    nextMoveIndex % (playersCount - playersTimeOver.length)
   ];
 }
 
@@ -16,12 +18,21 @@ export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
 
   function getSequenceIndexes(index) {
     const res = Array.from({ length: 4 }, () => []);
+
     for (let j = 0; j < sequenceSize; j++) {
       res[0].push(index - gap + j);
       res[1].push(index - fieldSize * (gap - j) + j - gap);
       res[2].push(index + fieldSize * (gap - j) + j - gap);
       res[3].push(index - fieldSize * (gap - j));
     }
+
+    const x = index % fieldSize;
+    if (x < gap || x >= fieldSize - gap) {
+      res.shift();
+      res.shift();
+      res.shift();
+    }
+
     return res;
   }
 

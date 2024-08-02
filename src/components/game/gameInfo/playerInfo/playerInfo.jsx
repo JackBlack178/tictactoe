@@ -3,8 +3,8 @@ import { Profile } from "../../../profile";
 import { GameSymbol } from "../../gameSymbol";
 import { clsx } from "clsx";
 
-const PlayerInfo = ({ playerInfo, isRight, isTimerRunning }) => {
-  const [seconds, setSeconds] = React.useState(60);
+const PlayerInfo = ({ playerInfo, isRight, isTimerRunning, onTimeOver }) => {
+  const [seconds, setSeconds] = React.useState(5);
   const minutesStr = Math.floor(seconds / 60)
     .toString()
     .padStart(2, "0");
@@ -20,10 +20,14 @@ const PlayerInfo = ({ playerInfo, isRight, isTimerRunning }) => {
       );
       return () => {
         clearInterval(interval);
-        setSeconds(60);
+        setSeconds(5);
       };
     }
   }, [isTimerRunning]);
+
+  useEffect(() => {
+    if (seconds === 0) onTimeOver(playerInfo.symbol);
+  }, [seconds]);
 
   const getTimerColor = () => {
     if (isTimerRunning) {

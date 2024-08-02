@@ -4,11 +4,19 @@ import { GameField } from "../components/game/gameField";
 import { GameTitle } from "../components/game/gameTitle";
 import { useState } from "react";
 import { useGameState } from "../hooks/useGameState";
+import { GameSymbol } from "../components/game/gameSymbol";
 
 export default function HomePage() {
   const [playersCount] = useState(2);
-  const { currentStep, nextStep, cells, handleCellClick, winnerSequence } =
-    useGameState(playersCount);
+  const {
+    currentStep,
+    nextStep,
+    cells,
+    winnerSequence,
+    winnerSymbol,
+    handleCellClick,
+    handlePlayerTimeOver,
+  } = useGameState(playersCount);
 
   return (
     <>
@@ -20,7 +28,14 @@ export default function HomePage() {
             className="mt-6"
             playersCount={playersCount}
             currentStep={currentStep}
+            winnerExist={!!winnerSymbol}
+            onTimeOver={handlePlayerTimeOver}
           ></GameInfo>
+          {winnerSymbol && (
+            <h3>
+              Победитель <GameSymbol symbol={winnerSymbol}></GameSymbol>{" "}
+            </h3>
+          )}
           <GameField
             className="mt-6 w-max mx-auto"
             playersCount={playersCount}
@@ -29,6 +44,7 @@ export default function HomePage() {
             nextStep={nextStep}
             handleCellClick={handleCellClick}
             winnerSequence={winnerSequence}
+            winnerSymbol={winnerSymbol}
           ></GameField>
         </main>
       </div>
