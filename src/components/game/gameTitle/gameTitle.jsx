@@ -5,7 +5,7 @@ import StarIcon from "../icons/starIcon";
 import PlayersCountIcon from "../icons/playersCountIcon";
 import TimeLeftIcon from "../icons/timeLeftIcon";
 
-const GameTitle = () => {
+const GameTitle = ({ playersCount }) => {
   return (
     <div className="pl-2">
       <Link href="#" className="flex items-center gap-2 text-xs text-teal-600">
@@ -16,7 +16,8 @@ const GameTitle = () => {
       <div className="flex items-center gap-3 text-slate-400 text-xs">
         <StarIcon></StarIcon>
         <div className="flex items-center gap-1">
-          <PlayersCountIcon></PlayersCountIcon>2
+          <PlayersCountIcon></PlayersCountIcon>
+          {playersCount}
         </div>
         <div className="flex items-center gap-1">
           <TimeLeftIcon></TimeLeftIcon>1 мин на ход

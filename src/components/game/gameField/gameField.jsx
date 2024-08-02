@@ -1,48 +1,69 @@
 import React from "react";
 import { clsx } from "clsx";
 import UIButton from "../../../UI/Button/UIButton";
-import OIcon from "../gameInfo/icons/oIcon";
-import XIcon from "../gameInfo/icons/xIcon";
+import { GameMoveInfo } from "./gameMoveInfo";
+import { GameCell } from "./gameCell";
+import { GAME_SYBOLS, SYMBOLS_ORDER } from "../../../constants/constants";
+import { GameSymbol } from "../gameSymbol";
 
-const cells = new Array(19 * 19).fill(null);
-
-const GameField = ({ className, children }) => {
+const GameField = ({
+  className,
+  playersCount,
+  handleCellClick,
+  cells,
+  currentStep,
+  nextStep,
+  winnerSequence,
+}) => {
   return (
     <>
-      <section
-        className={clsx(
-          className,
-          "bg-white rounded-2xl shadow-md px-8 pt-5 pb-7 w-max  mx-auto",
-        )}
-      >
-        <div className="flex gap-3 items-center">
-          <div className="mr-auto">
-            <div className="flex items-center gap-1 text-xl leading-tight">
-              Ход: <OIcon className="w-5 h-5"></OIcon>
-            </div>
-            <div className="flex items-center gap-1 text-xs leading-tight text-slate-400">
-              Следующий: <XIcon></XIcon>
-            </div>
-          </div>
-          <UIButton size="md" option={"primary"}>
-            Ничья
-          </UIButton>
-          <UIButton size={"md"} option="outline">
+      <GameFieldLayout className={className}>
+        <GameMoveInfo nextStep={nextStep} currentStep={currentStep}>
+          <UIButton size="md">Ничья</UIButton>
+          <UIButton size="md" option="outline">
             Сдаться
           </UIButton>
-        </div>
+        </GameMoveInfo>
 
-        <div className="grid grid-cols-[repeat(19,_30px)] grid-rows-[repeat(19,_30px)] pt-px pl-px mt-3">
-          {cells.map((_, i) => (
-            <button
-              key={i}
-              className="border border-slate-200 -ml-px -pt-px"
-            ></button>
+        <GameGrid>
+          {cells.map((symbol, i) => (
+            <React.Fragment key={i}>
+              <GameCell
+                onClick={() => handleCellClick(i)}
+                isWinner={winnerSequence?.includes(i)}
+              >
+                {symbol && (
+                  <GameSymbol symbol={symbol} className="w-5 h-5"></GameSymbol>
+                )}
+              </GameCell>
+            </React.Fragment>
           ))}
-        </div>
-      </section>
+        </GameGrid>
+      </GameFieldLayout>
     </>
   );
 };
 
 export default GameField;
+
+const GameFieldLayout = ({ children, className }) => {
+  return (
+    <div
+      className={clsx(
+        className,
+        "bg-white rounded-2xl shadow-md px-8 pt-5 pb-7",
+      )}
+    >
+      {" "}
+      {children}
+    </div>
+  );
+};
+
+const GameGrid = ({ children }) => {
+  return (
+    <div className="grid grid-cols-[repeat(19,_30px)] grid-rows-[repeat(19,_30px)] pt-px pl-px mt-3">
+      {children}
+    </div>
+  );
+};

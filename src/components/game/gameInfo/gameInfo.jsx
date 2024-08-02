@@ -1,40 +1,60 @@
 import React from "react";
-import { Profile } from "../../profile";
 import { clsx } from "clsx";
-import XIcon from "./icons/xIcon";
-import OIcon from "./icons/oIcon";
-import SquareIcon from "./icons/squareIcon";
-import TriangleIcon from "./icons/triangleIcon";
+import PlayerInfo from "./playerInfo/playerInfo";
+import { GAME_SYBOLS } from "../../../constants/constants";
 
-const GameInfo = ({ className }) => {
+import avatarSrc1 from "./playerInfo/images/playerIcon1.png";
+import avatarSrc2 from "./playerInfo/images/playerIcon2.png";
+import avatarSrc3 from "./playerInfo/images/playerIcon3.png";
+import avatarSrc4 from "./playerInfo/images/playerIcon4.png";
+
+const players = [
+  {
+    id: 1,
+    name: "Vanya",
+    rating: 1234,
+    avatar: avatarSrc1,
+    symbol: GAME_SYBOLS.CROSS,
+  },
+  {
+    id: 2,
+    name: "Petyahat34sdasd",
+    rating: 3212,
+    avatar: avatarSrc2,
+    symbol: GAME_SYBOLS.SQUARE,
+  },
+  {
+    id: 3,
+    name: "Igar",
+    rating: 1523,
+    avatar: avatarSrc3,
+    symbol: GAME_SYBOLS.TRIANGLE,
+  },
+  {
+    id: 4,
+    name: "Alena",
+    rating: 978,
+    avatar: avatarSrc4,
+    symbol: GAME_SYBOLS.ZERO,
+  },
+];
+
+const GameInfo = ({ className, playersCount, currentStep }) => {
   return (
     <div
       className={clsx(
         className,
-        "flex items-center justify-between bg-white rounded-2xl shadow-md px-8 py-4",
+        "bg-white rounded-2xl shadow-md px-8 py-4 grid grid-cols-2",
       )}
     >
-      <div className="flex items-center gap-3">
-        <div className="relative">
-          <Profile className="w-44"></Profile>
-          <div className="w-5 h-5 rounded-full bg-white shadow absolute -left-0.5 -top-0.5 flex items-center justify-center">
-            <XIcon></XIcon>
-          </div>
-        </div>
-        <div className="border border-solid border-slate-200 w-px h-6"></div>
-        <div className="text-slate-900 text-lg font-semibold">01:08</div>
-      </div>
-
-      <div className="flex items-center gap-3">
-        <div className="text-orange-600 text-lg font-semibold">01:08</div>
-        <div className="border border-solid border-slate-200 w-px h-6"></div>
-        <div className="relative">
-          <Profile className="w-44"></Profile>
-          <div className="w-5 h-5 rounded-full bg-white shadow absolute -left-0.5 -top-0.5 flex items-center justify-center">
-            <XIcon></XIcon>
-          </div>
-        </div>
-      </div>
+      {players.slice(0, playersCount).map((player, index) => (
+        <PlayerInfo
+          key={player.id}
+          playerInfo={player}
+          isRight={index % 2 === 0}
+          isTimerRunning={player.symbol === currentStep}
+        ></PlayerInfo>
+      ))}
     </div>
   );
 };

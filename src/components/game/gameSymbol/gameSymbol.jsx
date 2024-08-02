@@ -1,20 +1,20 @@
 import React from "react";
+import XIcon from "../gameInfo/icons/xIcon";
+import OIcon from "../gameInfo/icons/oIcon";
+import { GAME_SYBOLS } from "../../../constants/constants";
+import TriangleIcon from "../gameInfo/icons/triangleIcon";
+import SquareIcon from "../gameInfo/icons/squareIcon";
 
-import { SYMBOL_O, SYMBOL_X } from "../constants/constants";
-import { clsx } from "clsx";
+const GameSymbol = ({ symbol, className }) => {
+  const Icon =
+    {
+      [GAME_SYBOLS.CROSS]: XIcon,
+      [GAME_SYBOLS.TRIANGLE]: TriangleIcon,
+      [GAME_SYBOLS.ZERO]: OIcon,
+      [GAME_SYBOLS.SQUARE]: SquareIcon,
+    }[symbol] ?? XIcon;
 
-const GameSymbol = ({ symbol }) => {
-  return (
-    <span
-      className={clsx(
-        `text-[20px] leading-6`,
-        symbol === SYMBOL_O && "text-green-600",
-        symbol === SYMBOL_X && "text-red-600",
-      )}
-    >
-      {symbol}
-    </span>
-  );
+  return <Icon className={className} />;
 };
 
 export default GameSymbol;
