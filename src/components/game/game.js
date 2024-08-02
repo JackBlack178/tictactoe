@@ -2,7 +2,7 @@ import React from "react";
 import useGameState from "../hooks/useGameState";
 import GameInfo from "../gameInfo/gameInfo";
 import GameCell from "../gameCell/gameCell";
-import ResetButton from "../../UI/Button/resetButton";
+import UIButton from "../../UI/Button/UIButton";
 
 const Game = () => {
   const {
@@ -44,7 +44,14 @@ const Game = () => {
           ></GameCell>
         ))}
       </div>
-      <ResetButton onClick={resetGame}>Сброс</ResetButton>
+      <UIButton
+        onClick={resetGame}
+        size="sm"
+        option={"primary"}
+        className="mt-3"
+      >
+        Сброс
+      </UIButton>
     </div>
   );
 };
