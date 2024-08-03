@@ -2,9 +2,12 @@ import { Header } from "../components/header";
 import { GameInfo } from "../components/game/gameInfo";
 import { GameField } from "../components/game/gameField";
 import { GameTitle } from "../components/game/gameTitle";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useGameState } from "../hooks/useGameState";
 import { GameSymbol } from "../components/game/gameSymbol";
+import UIModal from "../UI/Modal/UIModal";
+import UIButton from "../UI/Button/UIButton";
+import { log } from "next/dist/server/typescript/utils";
 
 export default function HomePage() {
   const [playersCount] = useState(2);
@@ -48,6 +51,23 @@ export default function HomePage() {
           ></GameField>
         </main>
       </div>
+
+      <UIModal isOpen={!!winnerSymbol} onClose={() => console.log("close")}>
+        <UIModal.Header>Игра завершена</UIModal.Header>
+        <UIModal.Body>
+          <div className="text-sm">
+            Победитель: <span className="text-teal-600">abracadabra</span>
+          </div>
+        </UIModal.Body>
+        <UIModal.Footer>
+          <UIButton size="md" option="outline">
+            Вернуться
+          </UIButton>
+          <UIButton size="md" option="primary">
+            Играть снова
+          </UIButton>
+        </UIModal.Footer>
+      </UIModal>
     </>
   );
 }
