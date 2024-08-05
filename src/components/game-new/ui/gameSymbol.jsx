@@ -1,9 +1,9 @@
 import React from "react";
-import XIcon from "../gameInfo/icons/xIcon";
-import OIcon from "../gameInfo/icons/oIcon";
-import { GAME_SYBOLS } from "../../../constants/constants";
-import TriangleIcon from "../gameInfo/icons/triangleIcon";
-import SquareIcon from "../gameInfo/icons/squareIcon";
+import { GAME_SYBOLS } from "../constants/constants";
+import XIcon from "./icons/xIcon";
+import TriangleIcon from "./icons/triangleIcon";
+import OIcon from "./icons/oIcon";
+import SquareIcon from "./icons/squareIcon";
 
 const GameSymbol = ({ symbol, className }) => {
   const Icon =
