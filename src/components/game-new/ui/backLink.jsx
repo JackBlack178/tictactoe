@@ -1,6 +1,7 @@
 import React from "react";
-import ArrowLeftIcon from "../../game/icons/arrowLeftIcon";
+
 import Link from "next/link";
+import ArrowLeftIcon from "./icons/arrowLeftIcon";
 
 const BackLink = () => {
   return (

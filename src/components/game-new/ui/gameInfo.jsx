@@ -1,7 +1,7 @@
 import React from "react";
-import StarIcon from "../../game/icons/starIcon";
-import PlayersCountIcon from "../../game/icons/playersCountIcon";
-import TimeLeftIcon from "../../game/icons/timeLeftIcon";
+import StarIcon from "./icons/starIcon";
+import PlayersCountIcon from "./icons/playersCountIcon";
+import TimeLeftIcon from "./icons/timeLeftIcon";
 
 const GameInfo = ({ playersCount, isRatingGame, timeMode }) => {
   return (

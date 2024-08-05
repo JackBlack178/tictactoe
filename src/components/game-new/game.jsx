@@ -1,5 +1,5 @@
-import { GameTitle } from "../game-new/ui/gameTitle";
-import { GameInfo } from "../game-new/ui/gameInfo";
+import { GameTitle } from "./ui/gameTitle";
+import { GameInfo } from "./ui/gameInfo";
 import React from "react";
 import GameLayout from "./ui/gameLayout";
 import BackLink from "./ui/backLink";
