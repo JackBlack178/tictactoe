@@ -23,8 +23,6 @@ const UIModal = ({
   const handleClick = (e) => {
     const inModal = e.target.closest("[data-id=modal]");
     if (inModal) return;
-
-    onClose();
   };
 
   const modal = (
