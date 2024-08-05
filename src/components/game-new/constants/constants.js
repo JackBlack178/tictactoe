@@ -10,6 +10,8 @@ export const GAME_SYBOLS = {
   SQUARE: "square",
 };
 
+export const PLAYERS_COUNT = 2;
+
 export const SYMBOLS_ORDER = [
   GAME_SYBOLS.CROSS,
   GAME_SYBOLS.ZERO,

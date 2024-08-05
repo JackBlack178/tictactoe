@@ -1,6 +1,8 @@
-import { GAME_SYBOLS, SYMBOLS_ORDER } from "../constants/constants";
 import React from "react";
-import { computeWinner, getNextStep } from "../components/game/model";
+
+import { GAME_SYBOLS } from "../constants/constants";
+import { getNextStep } from "./getNextStep";
+import { computeWinner } from "./computeWinner";
 
 export const useGameState = (playersCount, winnerExist) => {
   const [{ currentStep, cells, playersTimeOver }, setGameState] =
@@ -14,12 +16,11 @@ export const useGameState = (playersCount, winnerExist) => {
   const winnerSequence = computeWinner(cells);
 
   const winnerSymbol =
-    nextStep === currentStep ? currentStep : winnerSequence?.[0];
+    nextStep === currentStep ? currentStep : cells[winnerSequence?.[0]];
 
   const handleCellClick = (index) => {
     setGameState((prev) => {
       if (prev.cells[index]) return prev;
-
       return {
         ...prev,
         currentStep: getNextStep(

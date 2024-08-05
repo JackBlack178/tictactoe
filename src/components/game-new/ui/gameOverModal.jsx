@@ -1,15 +1,17 @@
 import React from "react";
-import UIModal from "../../UI/Modal/UIModal";
-import UIButton from "../../UI/Button/UIButton";
+import UIModal from "../../../UI/Modal/UIModal";
+import UIButton from "../../../UI/Button/UIButton";
 
-const GameOverModal = () => {
+const GameOverModal = ({ winnerName, players }) => {
   return (
-    <UIModal isOpen={!!winnerSymbol} onClose={() => console.log("close")}>
+    <UIModal isOpen={winnerName} onClose={() => console.log("close")}>
       <UIModal.Header>Игра завершена</UIModal.Header>
       <UIModal.Body>
         <div className="text-sm">
-          Победитель: <span className="text-teal-600">abracadabra</span>
+          Победитель: <span className="text-teal-600">{winnerName}</span>
         </div>
+
+        <div className={"grid grid-cols-2 mt-3"}>{players}</div>
       </UIModal.Body>
       <UIModal.Footer>
         <UIButton size="md" option="outline">
