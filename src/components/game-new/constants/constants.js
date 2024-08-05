@@ -11,6 +11,7 @@ export const GAME_SYBOLS = {
 };
 
 export const PLAYERS_COUNT = 2;
+export const DEFAULT_TIMER_MS = 7 * 1000;
 
 export const SYMBOLS_ORDER = [
   GAME_SYBOLS.CROSS,

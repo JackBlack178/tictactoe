@@ -1,18 +1,13 @@
 import { SYMBOLS_ORDER } from "../constants/constants";
 
-export function getNextStep(gameState, playersCount, playersTimeOver) {
-  // const slicedSymbolsOrder = SYMBOLS_ORDER.slice(0, playersCount).filter(
-  //   (symbol) => !playersTimeOver.includes(symbol),
-  // );
+export function getNextStep(gameState, playersCount) {
+  const timers = gameState.timers;
 
   const currentStep = gameState.currentStep;
-  const slicedSymbolsOrder = SYMBOLS_ORDER;
+  const slicedSymbolsOrder = SYMBOLS_ORDER.slice(0, playersCount).filter(
+    (symbol) => timers[symbol] > 0,
+  );
 
-  const nextMoveIndex =
-    slicedSymbolsOrder.slice(0, playersCount).indexOf(currentStep) + 1;
-
-  return slicedSymbolsOrder.slice(0, playersCount)[
-    // nextMoveIndex % (playersCount - playersTimeOver.length)
-    nextMoveIndex % playersCount
-  ];
+  const nextMoveIndex = slicedSymbolsOrder.indexOf(currentStep) + 1;
+  return slicedSymbolsOrder[nextMoveIndex] ?? slicedSymbolsOrder[0];
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { clsx } from "clsx";
 import GameSymbol from "./gameSymbol";
 import Image from "next/image";
+import { useNow } from "../../../lib/timer";
 
 const PlayerInfo = ({
   name,
@@ -9,17 +10,22 @@ const PlayerInfo = ({
   isRight,
   avatarSrc,
   symbol,
-  isTimerRunning,
-  seconds,
+  timer,
+  timerStartAt,
 }) => {
+  const now = useNow(1000, timerStartAt);
+  const mils = Math.max(now ? timer - (now - timerStartAt) : timer, 0);
+
+  const seconds = Math.ceil(mils / 1000);
   const secondsStr = (seconds % 60).toString().padStart(2, "0");
   const minutesStr = Math.floor(seconds / 60)
     .toString()
     .padStart(2, "0");
+
   const isDanger = seconds < 10;
 
   const getTimerColor = () => {
-    if (isTimerRunning) {
+    if (timerStartAt) {
       return isDanger ? "text-orange-600" : "text-slate-900";
     }
     return "text-slate-200";

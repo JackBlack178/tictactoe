@@ -3,7 +3,11 @@ import { GameInfo } from "./ui/gameInfo";
 import React, { useReducer } from "react";
 import GameLayout from "./ui/gameLayout";
 import BackLink from "./ui/backLink";
-import { PLAYERS, PLAYERS_COUNT } from "./constants/constants";
+import {
+  DEFAULT_TIMER_MS,
+  PLAYERS,
+  PLAYERS_COUNT,
+} from "./constants/constants";
 import { PlayerInfo } from "./ui/playerInfo";
 import { GameMoveInfo } from "./ui/gameMoveInfo";
 import { GameCell } from "./ui/gameCell";
@@ -16,16 +20,24 @@ import {
 import { getNextStep } from "./model/getNextStep";
 import { computeWinner } from "./model/computeWinner";
 import { computeWinnerSymbol } from "./model/computeWinnerSymbol";
+import { computePlayerTimer } from "./model/computePlayerTimer";
+import { useInterval } from "../../lib/timer";
 
 const playersCount = PLAYERS_COUNT;
+const defaultTimer = DEFAULT_TIMER_MS;
 
 export function Game() {
   const [gameState, dispatch] = useReducer(
     gameStateReducer,
-    { playersCount },
+    { playersCount, defaultTimer, currentStepStart: Date.now() },
     initGameState,
   );
 
+  useInterval(1000, gameState.currentStep, () =>
+    dispatch({ type: GAME_STATE_ACTIONS.TICK, payload: { now: Date.now() } }),
+  );
+
+  const cells = gameState.cells;
   const currentStep = gameState.currentStep;
   const nextStep = getNextStep(gameState, playersCount);
   const winnerSequence = computeWinner(gameState);
@@ -33,7 +45,6 @@ export function Game() {
     nextStep,
     winnerSequence,
   });
-  const cells = gameState.cells;
 
   const winnerName = PLAYERS.find(
     (player) => player.symbol === winnerSymbol,
@@ -57,10 +68,9 @@ export function Game() {
             symbol={player.symbol}
             avatarSrc={player.avatar}
             rating={player.rating}
-            seconds={60}
             name={player.name}
             isRight={index % 2 === 0}
-            isTimerRunning={false}
+            {...computePlayerTimer(gameState, player.symbol)}
           ></PlayerInfo>
         ))}
         gameMoveInfo={
@@ -75,7 +85,7 @@ export function Game() {
             onClick={() =>
               dispatch({
                 type: GAME_STATE_ACTIONS.CELL_CLICK,
-                payload: { index: i },
+                payload: { index: i, now: Date.now() },
               })
             }
           />
@@ -83,18 +93,20 @@ export function Game() {
       ></GameLayout>
       <GameOverModal
         winnerName={winnerName}
-        players={PLAYERS.slice(0, PLAYERS_COUNT).map((player, index) => (
-          <PlayerInfo
-            key={player.id}
-            symbol={player.symbol}
-            avatarSrc={player.avatar}
-            rating={player.rating}
-            seconds={60}
-            name={player.name}
-            isRight={index % 2 === 0}
-            isTimerRunning={false}
-          ></PlayerInfo>
-        ))}
+        players={PLAYERS.slice(0, PLAYERS_COUNT).map((player, index) => {
+          const { timer } = computePlayerTimer(gameState, player.symbol);
+          return (
+            <PlayerInfo
+              key={player.id}
+              symbol={player.symbol}
+              avatarSrc={player.avatar}
+              rating={player.rating}
+              name={player.name}
+              isRight={index % 2 === 0}
+              timer={timer}
+            ></PlayerInfo>
+          );
+        })}
       />
     </>
   );
