@@ -46,6 +46,15 @@ export function Game() {
     ),
   );
 
+  const handleCellClick = useCallback(
+    (i) =>
+      dispatch({
+        type: GAME_STATE_ACTIONS.CELL_CLICK,
+        payload: { index: i, now: Date.now() },
+      }),
+    [],
+  );
+
   const cells = gameState.cells;
   const currentStep = gameState.currentStep;
   const nextStep = getNextStep(gameState, playersCount);
@@ -90,15 +99,11 @@ export function Game() {
         gameCells={cells.map((cell, i) => (
           <GameCell
             key={i}
+            index={i}
             symbol={cells[i]}
             disabled={winnerSymbol !== undefined}
             isWinner={winnerSequence?.includes(i)}
-            onClick={() =>
-              dispatch({
-                type: GAME_STATE_ACTIONS.CELL_CLICK,
-                payload: { index: i, now: Date.now() },
-              })
-            }
+            onClick={handleCellClick}
           />
         ))}
       ></GameLayout>
