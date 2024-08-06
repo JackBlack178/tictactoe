@@ -4,7 +4,7 @@ import Image from "next/image";
 import logoXSrc from "./figures/X.svg";
 import logoOSrc from "./figures/o.svg";
 
-import UIButton from "../../UI/Button/UIButton";
+import UIButton from "../UI/UIButton";
 import { Profile } from "../profile";
 import ArrowDown from "../profile/icons/arrowDown";
 

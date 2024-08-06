@@ -1,6 +1,6 @@
 import React from "react";
-import UIModal from "../../../UI/Modal/UIModal";
-import UIButton from "../../../UI/Button/UIButton";
+import UIModal from "../../UI/UIModal";
+import UIButton from "../../UI/UIButton";
 
 const GameOverModal = ({ winnerName, players }) => {
   return (
