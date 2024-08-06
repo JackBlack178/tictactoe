@@ -1,6 +1,6 @@
 import { GameTitle } from "./ui/gameTitle";
 import { GameInfo } from "./ui/gameInfo";
-import React, { useReducer } from "react";
+import React, { useMemo, useReducer } from "react";
 import GameLayout from "./ui/gameLayout";
 import BackLink from "./ui/backLink";
 import {
@@ -33,14 +33,16 @@ export function Game() {
     initGameState,
   );
 
-  useInterval(1000, gameState.currentStep, () =>
+  useInterval(100, gameState.currentStep, () =>
     dispatch({ type: GAME_STATE_ACTIONS.TICK, payload: { now: Date.now() } }),
   );
 
   const cells = gameState.cells;
   const currentStep = gameState.currentStep;
   const nextStep = getNextStep(gameState, playersCount);
-  const winnerSequence = computeWinner(gameState);
+
+  const winnerSequence = useMemo(() => computeWinner(gameState), [gameState]);
+
   const winnerSymbol = computeWinnerSymbol(gameState, {
     nextStep,
     winnerSequence,
