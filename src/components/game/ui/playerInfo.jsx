@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { clsx } from "clsx";
 import GameSymbol from "./gameSymbol";
 import Image from "next/image";
 import { useNow } from "../../../lib/timer";
 
-const PlayerInfo = ({
+const PlayerInfo = memo(function PlayerInfo({
   name,
   rating,
   isRight,
@@ -12,7 +12,7 @@ const PlayerInfo = ({
   symbol,
   timer,
   timerStartAt,
-}) => {
+}) {
   const now = useNow(1000, timerStartAt);
   const mils = Math.max(now ? timer - (now - timerStartAt) : timer, 0);
 
@@ -79,6 +79,6 @@ const PlayerInfo = ({
       </div>
     </div>
   );
-};
+});
 
 export { PlayerInfo };

@@ -1,6 +1,6 @@
 import { GameTitle } from "./ui/gameTitle";
 import { GameInfo } from "./ui/gameInfo";
-import React, { useMemo, useReducer } from "react";
+import React, { useCallback, useMemo, useReducer } from "react";
 import GameLayout from "./ui/gameLayout";
 import BackLink from "./ui/backLink";
 import {
@@ -33,8 +33,17 @@ export function Game() {
     initGameState,
   );
 
-  useInterval(100, gameState.currentStep, () =>
-    dispatch({ type: GAME_STATE_ACTIONS.TICK, payload: { now: Date.now() } }),
+  useInterval(
+    1000,
+    !!gameState.currentStep,
+    useCallback(
+      () =>
+        dispatch({
+          type: GAME_STATE_ACTIONS.TICK,
+          payload: { now: Date.now() },
+        }),
+      [],
+    ),
   );
 
   const cells = gameState.cells;
