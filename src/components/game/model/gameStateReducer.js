@@ -4,6 +4,7 @@ import { GAME_SYBOLS, SYMBOLS_ORDER } from "../constants/constants";
 export const GAME_STATE_ACTIONS = {
   CELL_CLICK: "cellClick",
   TICK: "tick",
+  RESET: "reset",
 };
 
 export const initGameState = ({
@@ -48,6 +49,22 @@ export const gameStateReducer = (state, action) => {
         timers: updateTimers(state, now),
         currentStep: getNextStep(state),
         currentStepStart: now,
+      };
+    }
+
+    case GAME_STATE_ACTIONS.RESET: {
+      const { playersCount, defaultTimer, currentStepStart } = action.payload;
+      return {
+        cells: new Array(19 * 19).fill(null),
+        currentStep: GAME_SYBOLS.CROSS,
+        currentStepStart,
+        playersCount,
+        timers: SYMBOLS_ORDER.reduce((timers, symbol, index) => {
+          if (index < playersCount) {
+            timers[symbol] = defaultTimer;
+          }
+          return timers;
+        }, {}),
       };
     }
 

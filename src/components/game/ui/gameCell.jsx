@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { clsx } from "clsx";
 import GameSymbol from "./gameSymbol";
 
@@ -9,7 +9,6 @@ const GameCell = memo(function GameCell({
   symbol,
   index,
 }) {
-  console.log("rendered");
   return (
     <button
       disabled={disabled}

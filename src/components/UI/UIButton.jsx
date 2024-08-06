@@ -1,5 +1,6 @@
 import React from "react";
 import { clsx } from "clsx";
+import { on } from "next/dist/client/components/react-dev-overlay/pages/bus";
 
 /**
  * @param {{
@@ -31,7 +32,11 @@ const UIButton = ({
     }[option],
   );
 
-  return <button className={buttonClassName}>{children}</button>;
+  return (
+    <button className={buttonClassName} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export default UIButton;

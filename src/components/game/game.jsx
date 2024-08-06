@@ -22,6 +22,7 @@ import { computeWinner } from "./model/computeWinner";
 import { computeWinnerSymbol } from "./model/computeWinnerSymbol";
 import { computePlayerTimer } from "./model/computePlayerTimer";
 import { useInterval } from "../../lib/timer";
+import { resetGameState } from "./model/resetGame";
 
 const playersCount = PLAYERS_COUNT;
 const defaultTimer = DEFAULT_TIMER_MS;
@@ -58,7 +59,7 @@ export function Game() {
   const cells = gameState.cells;
   const currentStep = gameState.currentStep;
   const nextStep = getNextStep(gameState, playersCount);
-
+  const resetGame = resetGameState(dispatch, playersCount, defaultTimer);
   const winnerSequence = useMemo(() => computeWinner(gameState), [gameState]);
 
   const winnerSymbol = computeWinnerSymbol(gameState, {
@@ -69,7 +70,6 @@ export function Game() {
   const winnerName = PLAYERS.find(
     (player) => player.symbol === winnerSymbol,
   )?.name;
-
   return (
     <>
       <GameLayout
@@ -108,6 +108,7 @@ export function Game() {
         ))}
       ></GameLayout>
       <GameOverModal
+        resetGame={resetGame}
         winnerName={winnerName}
         players={PLAYERS.slice(0, PLAYERS_COUNT).map((player, index) => {
           const { timer } = computePlayerTimer(gameState, player.symbol);

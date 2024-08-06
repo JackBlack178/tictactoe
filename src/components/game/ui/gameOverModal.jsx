@@ -1,8 +1,9 @@
 import React from "react";
 import UIModal from "../../UI/UIModal";
 import UIButton from "../../UI/UIButton";
+import { GAME_STATE_ACTIONS } from "../model/gameStateReducer";
 
-const GameOverModal = ({ winnerName, players }) => {
+const GameOverModal = ({ winnerName, players, resetGame }) => {
   return (
     <UIModal isOpen={winnerName}>
       <UIModal.Header>Игра завершена</UIModal.Header>
@@ -17,7 +18,7 @@ const GameOverModal = ({ winnerName, players }) => {
         <UIButton size="md" option="outline">
           Вернуться
         </UIButton>
-        <UIButton size="md" option="primary">
+        <UIButton size="md" option="primary" onClick={resetGame}>
           Играть снова
         </UIButton>
       </UIModal.Footer>
