@@ -28,6 +28,5 @@ export function useInterval(interval, enabled, cb) {
     return () => {
       clearInterval(timer);
     };
-    //todo useCallback for cb
-  }, [interval, enabled]);
+  }, [interval, enabled, cb]);
 }

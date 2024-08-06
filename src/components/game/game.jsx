@@ -1,6 +1,6 @@
 import { GameTitle } from "./ui/gameTitle";
 import { GameInfo } from "./ui/gameInfo";
-import React, { useReducer } from "react";
+import React, { useCallback, useMemo, useReducer } from "react";
 import GameLayout from "./ui/gameLayout";
 import BackLink from "./ui/backLink";
 import {
@@ -33,14 +33,34 @@ export function Game() {
     initGameState,
   );
 
-  useInterval(1000, gameState.currentStep, () =>
-    dispatch({ type: GAME_STATE_ACTIONS.TICK, payload: { now: Date.now() } }),
+  useInterval(
+    1000,
+    !!gameState.currentStep,
+    useCallback(
+      () =>
+        dispatch({
+          type: GAME_STATE_ACTIONS.TICK,
+          payload: { now: Date.now() },
+        }),
+      [],
+    ),
+  );
+
+  const handleCellClick = useCallback(
+    (i) =>
+      dispatch({
+        type: GAME_STATE_ACTIONS.CELL_CLICK,
+        payload: { index: i, now: Date.now() },
+      }),
+    [],
   );
 
   const cells = gameState.cells;
   const currentStep = gameState.currentStep;
   const nextStep = getNextStep(gameState, playersCount);
-  const winnerSequence = computeWinner(gameState);
+
+  const winnerSequence = useMemo(() => computeWinner(gameState), [gameState]);
+
   const winnerSymbol = computeWinnerSymbol(gameState, {
     nextStep,
     winnerSequence,
@@ -79,15 +99,11 @@ export function Game() {
         gameCells={cells.map((cell, i) => (
           <GameCell
             key={i}
+            index={i}
             symbol={cells[i]}
             disabled={winnerSymbol !== undefined}
             isWinner={winnerSequence?.includes(i)}
-            onClick={() =>
-              dispatch({
-                type: GAME_STATE_ACTIONS.CELL_CLICK,
-                payload: { index: i, now: Date.now() },
-              })
-            }
+            onClick={handleCellClick}
           />
         ))}
       ></GameLayout>
