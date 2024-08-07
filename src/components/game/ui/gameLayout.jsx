@@ -10,7 +10,7 @@ const GameLayout = ({
   gameCells,
 }) => {
   return (
-    <div className={"pb-3 md:pb-10 w-[700px]"}>
+    <div className={"pb-3 md:pb-10"}>
       <div className="pl-2">
         {backLink}
         {gameTitle}
@@ -25,13 +25,13 @@ const GameLayout = ({
       </div>
 
       <div
-        className={"bg-white rounded-2xl shadow-md px-8 pt-5 pb-7 mt-6 mx-auto"}
+        className={"bg-white rounded-2xl shadow-md px-8 pt-5 pb-7 mt-6 w-auto"}
       >
         <div className="flex gap-3 items-center">
           <div className="mr-auto">{gameMoveInfo}</div>
         </div>
 
-        <div className="mx-auto grid grid-cols-[repeat(19,_15px)] grid-rows-[repeat(19,_15px)] md:grid-cols-[repeat(19,_17px)] md:grid-rows-[repeat(19,_17px)] lg:grid-cols-[repeat(19,_25px)] lg:grid-rows-[repeat(19,_25px)] pt-px pl-px">
+        <div className="grid grid-cols-[repeat(19,_15px)] grid-rows-[repeat(19,_15px)] sm:grid-cols-[repeat(19,_20px)] sm:grid-rows-[repeat(19,_20px)] md:grid-cols-[repeat(19,_25px)] md:grid-rows-[repeat(19,_25px)] pt-px pl-px">
           {gameCells}
         </div>
       </div>

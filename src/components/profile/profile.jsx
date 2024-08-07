@@ -16,7 +16,11 @@ const Profile = ({
         "ml-auto flex item-center gap-2 text-start text-teal-500",
       )}
     >
-      <Image src={avatarSrc} alt="Profile"></Image>
+      <Image
+        src={avatarSrc}
+        alt="Profile"
+        className={"w-8 aspect-square md:w-12 transition-all duration-1000"}
+      ></Image>
 
       <div className="overflow-hidden">
         <div className="text-sm md:text-lg leading-tight truncate">{name}</div>
