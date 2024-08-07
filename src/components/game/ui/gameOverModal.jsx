@@ -5,7 +5,7 @@ import { GAME_STATE_ACTIONS } from "../model/gameStateReducer";
 
 const GameOverModal = ({ winnerName, players, resetGame }) => {
   return (
-    <UIModal isOpen={winnerName}>
+    <UIModal isOpen={winnerName} onClose={resetGame}>
       <UIModal.Header>Игра завершена</UIModal.Header>
       <UIModal.Body>
         <div className="text-sm">
@@ -15,9 +15,6 @@ const GameOverModal = ({ winnerName, players, resetGame }) => {
         <div className={"grid grid-cols-2 mt-3"}>{players}</div>
       </UIModal.Body>
       <UIModal.Footer>
-        <UIButton size="md" option="outline">
-          Вернуться
-        </UIButton>
         <UIButton size="md" option="primary" onClick={resetGame}>
           Играть снова
         </UIButton>
