@@ -32,10 +32,10 @@ const PlayerInfo = memo(function PlayerInfo({
   };
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-0.5 md:gap-3 justify-between">
       <div
         className={clsx(
-          " text-lg font-semibold w-[60px]",
+          "text-sm md:text-lg font-semibold w-[60px]",
           isRight && "order-3",
           getTimerColor(),
         )}
@@ -53,12 +53,14 @@ const PlayerInfo = memo(function PlayerInfo({
       <div className={clsx("relative", isRight && "order-1")}>
         <div
           className={
-            "ml-auto flex item-center gap-2 text-start text-teal-500 w-44"
+            "ml-auto flex item-center gap-1 md:gap-2 text-start text-teal-500"
           }
         >
           <Image src={avatarSrc} alt="Profile"></Image>
           <div className="overflow-hidden">
-            <div className="text-lg leading-tight truncate ">{name}</div>
+            <div className="text-sm md:text-lg leading-tight truncate ">
+              {name}
+            </div>
             <div className="text-slate-400 text-xs leading-tight">
               Rating:{rating}
             </div>
@@ -73,7 +75,7 @@ const PlayerInfo = memo(function PlayerInfo({
         >
           <GameSymbol
             symbol={symbol}
-            className="w-3 h-3 flex justify-center items-center"
+            className=" h-2 md:w-3 aspect-square flex justify-center items-center"
           ></GameSymbol>
         </div>
       </div>

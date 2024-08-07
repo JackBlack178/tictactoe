@@ -10,16 +10,20 @@ import ArrowDown from "../profile/icons/arrowDown";
 
 const Header = () => {
   return (
-    <header className={"flex h-24 items-center px-8 bg-white shadow-md"}>
-      <Image src={logoXSrc} alt="Logo X" />
-      <div className="h-8 w-px border border-black mx-6"></div>
-      <Image src={logoOSrc} alt="Logo O" />
+    <header
+      className={
+        "w-screen flex flex-wrap h-24 px-2 sm:px-8 items-center bg-white shadow-md"
+      }
+    >
+      <Image src={logoXSrc} alt="Logo X" className="h-6 xl:h-8 md:h-6" />
+      <div className="h-6 xl:h-8 md:h-6  w-px border border-black mx-2 md:mx-6"></div>
+      <Image src={logoOSrc} alt="Logo O" className="h-6 xl:h-8 md:h-6" />
 
-      <UIButton option="primary" size="lg" className="ml-28">
+      <UIButton option="primary" size="md" className="ml-10  md:ml-28">
         Играть
       </UIButton>
 
-      <button className="ml-auto flex items-center text-teal-600">
+      <button className="ml-auto flex items-center text-teal-600 h-8 xl:h-10 md:h-9 gap-1">
         <Profile className="hover:text-teal-800 transition-all duration-300"></Profile>
         <ArrowDown className="hover:text-teal-800 transition-all duration-300"></ArrowDown>
       </button>

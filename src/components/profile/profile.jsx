@@ -17,9 +17,10 @@ const Profile = ({
       )}
     >
       <Image src={avatarSrc} alt="Profile"></Image>
+
       <div className="overflow-hidden">
-        <div className="text-lg leading-tight truncate ">{name}</div>
-        <div className="text-slate-400 text-xs leading-tight">
+        <div className="text-sm md:text-lg leading-tight truncate">{name}</div>
+        <div className="text-slate-400 text-xs  md:text-xs leading-tight">
           Rating:{rating}
         </div>
       </div>

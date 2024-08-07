@@ -18,7 +18,9 @@ const GameCell = memo(function GameCell({
       )}
       onClick={() => onClick(index)}
     >
-      {symbol && <GameSymbol symbol={symbol} className="w-5 h-5"></GameSymbol>}
+      {symbol && (
+        <GameSymbol symbol={symbol} className="w-2 sm:w-3 md:w-5"></GameSymbol>
+      )}
     </button>
   );
 });
